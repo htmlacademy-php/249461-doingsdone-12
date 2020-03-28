@@ -36,7 +36,7 @@ $tasks = [
         'completed' => false
     ],
     [
-        'task' => 'Заказать <script> пиццу',
+        'task' => 'Заказать пиццу',
         'date' => null,
         'category' => 'Домашние дела',
         'completed' => false
