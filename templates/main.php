@@ -46,7 +46,7 @@
             <?php if ($show_complete_tasks === 0 && $val['completed'] == true) {
                 continue;
             } ?>
-            <tr class="tasks__item task <?php if ($val['completed'] == true) echo "task--completed"; ?>">
+            <tr class="tasks__item task <?php if ($val['completed'] == true) echo "task--completed"; ?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">

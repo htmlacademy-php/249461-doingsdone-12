@@ -43,6 +43,7 @@ $tasks = [
     ],
 ];
 
+// Функция посчета кол-ва задач по категориям.
 function count_tasks (
     $arr_tasks, $categoryTask
 ) {
@@ -55,14 +56,17 @@ function count_tasks (
     return $count;
 }
 
+// Функция перевода спец.символов в мнемоники
 function protection_xss($str) {
     $text = htmlspecialchars($str);
 
     return $text;
 }
 
+// Функция подключения темплейтов
 require_once('helpers.php');
 
+// Подключение темплейтов
 $main_content = include_template ('main.php', [
     'tasks' => $tasks,
     'projects' => $projects]);
@@ -72,6 +76,7 @@ $layout_content = include_template('layout.php', [
     'title' => 'Дела в порядке'
 ]);
 
+// Вывод темплейтов
 print($layout_content);
 
 ?>
