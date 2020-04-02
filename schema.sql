@@ -4,11 +4,6 @@ CREATE DATABASE things_are_okay
 
 USE things_are_okay;
 
-CREATE TABLE projects (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    project_name VARCHAR(128) UNIQUE NOT NULL
-);
-
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -17,10 +12,18 @@ CREATE TABLE users (
     password CHAR(64) NOT NULL
 );
 
+CREATE TABLE projects (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    project_name VARCHAR(128) NOT NULL,
+    user_id INT
+);
+
 CREATE TABLE tasks (
     id INT AUTO_INCREMENT PRIMARY KEY,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status TINYINT DEFAULT 0,
     task_name VARCHAR(128) NOT NULL,
-    run_to DATE
+    run_to DATE,
+    user_id INT,
+    project_id INT
 );
