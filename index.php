@@ -2,7 +2,7 @@
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
 
-$projects = ['Входящие', 'Учеба', 'Работа', 'Домашние дела', 'Авто'];
+/*$projects = ['Входящие', 'Учеба', 'Работа', 'Домашние дела', 'Авто'];
 
 $tasks = [
     [
@@ -41,7 +41,7 @@ $tasks = [
         'category' => 'Домашние дела',
         'completed' => false
     ],
-];
+];*/
 
 // Функция посчета кол-ва задач по категориям.
 function count_tasks (
@@ -49,7 +49,7 @@ function count_tasks (
 ) {
     $count = 0;
     foreach ($arr_tasks as $key => $val) {
-        if ($val['category'] == $categoryTask) {
+        if ($val['project_id'] == $categoryTask) {
             $count++;
         }
     }
@@ -78,6 +78,37 @@ function timeleft ($enddate) {
 
     return $time_left;
 }
+
+
+// Работа с БД
+$db_connect = mysqli_connect('localhost', 'root', '', 'things_are_okay');
+mysqli_set_charset($db_connect, 'utf8');
+
+if (!$db_connect) {
+    $error = mysqli_connect_error();
+    print("Ошибка Б=базы данных " . $error);
+} else {
+    $sql = 'SELECT id, project_name FROM projects WHERE user_id = "2"';
+    $result = mysqli_query($db_connect, $sql);
+    if ($result) {
+        $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($db_connect);
+        print("Ошибка Б=базы данных " . $error);
+    }
+
+    $sql = 'SELECT tasks.id, status, task_name, run_to, project_id FROM tasks ' . 'JOIN projects ON tasks.project_id = projects.id ' . 'WHERE tasks.user_id = "2"';
+    $tasks_arr = mysqli_query($db_connect, $sql);
+
+    if ($tasks_arr) {
+        $tasks = mysqli_fetch_all($tasks_arr, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($db_connect);
+        print("Ошибка Б=базы данных " . $error);
+    }
+}
+
+
 
 // Файл с функцией подключения темплейтов
 require_once('helpers.php');
