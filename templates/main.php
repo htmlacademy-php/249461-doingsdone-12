@@ -4,9 +4,9 @@
     <nav class="main-navigation">
         <ul class="main-navigation__list">
             <?php foreach ($projects as $val) : ?>
-                <?php $countTask = count_tasks($tasks, $val);?>
+                <?php $countTask = count_tasks($tasks, $val['id']);?>
                 <li class="main-navigation__list-item">
-                    <a class="main-navigation__list-item-link" href="#"><?=protection_xss($val);?></a>
+                    <a class="main-navigation__list-item-link" href="#"><?=protection_xss($val['project_name']);?></a>
                     <span class="main-navigation__list-item-count"><?=$countTask;?></span>
                 </li>
             <?php endforeach; ?>
@@ -43,18 +43,18 @@
 
     <table class="tasks">
         <?php foreach ($tasks as $key => $val) : ?>
-            <?php if ($show_complete_tasks === 0 && $val['completed'] == true) {
+            <?php if ($show_complete_tasks === 0 && $val['status'] == 1) {
                 continue;
             } ?>
-            <tr class="tasks__item task <?php if ($val['completed'] == true) echo "task--completed"; ?> <?php if (timeleft($val['date']) <= 24 && $val['completed'] == false) echo "task--important"; ?> ">
+            <tr class="tasks__item task <?php if ($val['status'] == 1) echo "task--completed"; ?> <?php if (timeleft($val['run_to']) <= 24 && $val['status'] == 0) echo "task--important"; ?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                        <span class="checkbox__text"><?= protection_xss($val['task']); ?></span>
+                        <span class="checkbox__text"><?= protection_xss($val['task_name']); ?></span>
                     </label>
                 </td>
 
-                <td class="task__date"><?= $val['date'] ?></td>
+                <td class="task__date"><?= $val['run_to'] ?></td>
 
                 <td class="task__date"></td>
             </tr>
