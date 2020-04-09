@@ -4,9 +4,9 @@
     <nav class="main-navigation">
         <ul class="main-navigation__list">
             <?php foreach ($projects as $val) : ?>
-                <?php $countTask = count_tasks($tasks, $val['id']);?>
-                <li class="main-navigation__list-item">
-                    <a class="main-navigation__list-item-link" href="#"><?=protection_xss($val['project_name']);?></a>
+                <?php $countTask = count_tasks($all_tasks, $val['id']);?>
+                <li class="main-navigation__list-item <?php if($_GET['cat_id'] == $val['id']) echo "main-navigation__list-item--active"; ?>">
+                    <a class="main-navigation__list-item-link" href="index.php?cat_id=<?=$val['id']; ?>"><?=protection_xss($val['project_name']);?></a>
                     <span class="main-navigation__list-item-count"><?=$countTask;?></span>
                 </li>
             <?php endforeach; ?>
@@ -42,6 +42,12 @@
     </div>
 
     <table class="tasks">
+        <?php if (isset($_GET['cat_id']) && $is_cat_id == false) : ?>
+            <?php http_response_code(404); ?>
+            <?php http_response_code(); ?>
+            <?php $error = http_response_code(); ?>
+            <?php print("Запрашиваемая категория не найдена. Error: " . $error); ?>
+            <?php else: ?>
         <?php foreach ($tasks as $key => $val) : ?>
             <?php if ($show_complete_tasks === 0 && $val['status'] == 1) {
                 continue;
@@ -59,6 +65,7 @@
                 <td class="task__date"></td>
             </tr>
         <?php endforeach; ?>
+        <?php endif; ?>
         <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
     </table>
 </main>
