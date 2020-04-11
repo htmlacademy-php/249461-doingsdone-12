@@ -55,11 +55,9 @@ if (!$db_connect) {
 
     //сортировка задач по проектам
     if (isset($_GET['cat_id'])) {
-        filter_input($_GET['cat_id'], FILTER_SANITIZE_NUMBER_INT);
+        $cat_project = filter_input(INPUT_GET, 'cat_id', FILTER_SANITIZE_NUMBER_INT);
         $projects_id_arr = array_column($projects, 'id');
-        $is_cat_id = in_array($_GET['cat_id'], $projects_id_arr);
-
-        $cat_project = $_GET['cat_id'];
+        $is_cat_id = in_array($cat_project, $projects_id_arr);
     }
 
     // Данные для показа тасков по всем категориям или одной выбранной
