@@ -2,63 +2,26 @@
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
 
+// Подключение функций
+require_once('functions.php');
+
+// Файл с функцией подключения темплейтов
+require_once('helpers.php');
+
 // Подключение к БД
 require_once('init.php');
 
 // Функции с запросами на получение списка тасков
-require_once('selecttasks.php');
+require_once('select-tasks.php');
 
-// Для тестов выбор id пользователя
-$user_profile = "1";
-
-// Работа с БД
-
-/*function show_tasks ($user_id) {
-    $sql = 'SELECT tasks.id, status, task_name, run_to, project_id FROM tasks ' . 'JOIN projects ON tasks.project_id = projects.id ' . 'WHERE tasks.user_id = "' . $user_id . '"';
-
-    return $sql;
-}*/
 
 if (!$db_connect) {
     $error = mysqli_connect_error();
-    print("Ошибка Б=базы данных " . $error);
+    print("Ошибка Базы данных " . $error);
 } else {
-    //Показ имени пользователя
-    $sql = 'SELECT user_name FROM users WHERE id = "' . $user_profile . '"';
-    $result = mysqli_query($db_connect, $sql);
-    if ($result) {
-        $user_name = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    } else {
-        $error = mysqli_error($db_connect);
-        print("Ошибка базы данных " . $error);
-    }
+    require_once('users.php');
 
-    // Массив для постороения категорий
-    $sql = 'SELECT id, project_name FROM projects WHERE user_id = "' . $user_profile . '"';
-    $result = mysqli_query($db_connect, $sql);
-    if ($result) {
-        $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    } else {
-        $error = mysqli_error($db_connect);
-        print("Ошибка базы данных " . $error);
-    }
-
-    // Вывод данных для подсчета задач по категориям
-    $tasks_arr = mysqli_query($db_connect, show_tasks($user_profile));
-
-    if ($tasks_arr) {
-        $all_tasks = mysqli_fetch_all($tasks_arr, MYSQLI_ASSOC);
-    } else {
-        $error = mysqli_error($db_connect);
-        print("Ошибка базы данных " . $error);
-    }
-
-    //сортировка задач по проектам
-    if (isset($_GET['cat_id'])) {
-        $cat_project = filter_input(INPUT_GET, 'cat_id', FILTER_SANITIZE_NUMBER_INT);
-        $projects_id_arr = array_column($projects, 'id');
-        $is_cat_id = in_array($cat_project, $projects_id_arr);
-    }
+    require_once('projects-list.php');
 
     // Данные для показа тасков по всем категориям или одной выбранной
     if ($cat_project) {
@@ -76,13 +39,6 @@ if (!$db_connect) {
     }
 }
 
-
-
-// Подключение функций
-require_once('functions.php');
-
-// Файл с функцией подключения темплейтов
-require_once('helpers.php');
 
 // Подключение темплейтов
 $main_content = include_template ('main.php', [
