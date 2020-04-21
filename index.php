@@ -41,7 +41,13 @@ if (!$db_connect) {
 
 
 // Подключение темплейтов
+$projects_list = include_template ('projects.php', [
+    'all_tasks' => $all_tasks,
+    'projects' => $projects
+]);
+
 $main_content = include_template ('main.php', [
+    'projects_list' => $projects_list,
     'tasks' => $tasks,
     'all_tasks' => $all_tasks,
     'projects' => $projects,
