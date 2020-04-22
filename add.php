@@ -20,6 +20,33 @@ if (!$db_connect) {
     require_once('projects-list.php');
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $new_task = $_POST;
+
+    if (isset($_FILES['file'])) {
+        /*$file_type = getExtension($_FILES['file']['name']);
+        $file_name = uniqid() . "." . $file_type;
+        $new_task['path'] = $file_name;*/
+        $file_name = $_FILES['file']['name'];
+        $new_task['path'] = $file_name;
+        move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/' . $file_name);
+    }
+
+    $sql = 'INSERT INTO tasks (create_date, status, task_name, project_id, user_id, run_to, path) VALUES (NOW(), 0, ?, ?, 1, ?, ?)';
+
+    $stmt = db_get_prepare_stmt($db_connect, $sql, $new_task);
+    $res = mysqli_stmt_execute($stmt);
+    var_dump($new_task);
+    if ($res) {
+        $res_id = mysqli_insert_id($db_connect);
+
+        var_dump($res_id);
+    } else {
+        $error = mysqli_error($db_connect);
+        print("Ошибка: " . $error);
+    }
+}
+
 // Подключение темплейтов
 $projects_list = include_template ('projects.php', [
     'all_tasks' => $all_tasks,

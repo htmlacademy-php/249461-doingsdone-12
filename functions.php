@@ -36,4 +36,13 @@
         return $time_left;
     }
 
+    //Функция получения значений из POST запроса
+    function getPostVal($name) {
+        return $_POST[$name];
+    }
+
+    // Функция получения расширния загруженого файла
+    function getExtension( $filename ) {
+        return end( explode( '.', $filename ) );
+    }
 ?>

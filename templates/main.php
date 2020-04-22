@@ -43,10 +43,16 @@
                     </label>
                 </td>
 
+                <?php if ($val['path']) : ?>
+                <td class="task__file">
+                    <a class="download-link" href="uploads/<?= $val['path'] ?>"><?= $val['path'] ?></a>
+                </td>
+                <? endif; ?>
+
                 <td class="task__date"><?= $val['run_to'] ?></td>
 
-                <td class="task__date"></td>
             </tr>
+
         <?php endforeach; ?>
         <?php endif; ?>
         <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
