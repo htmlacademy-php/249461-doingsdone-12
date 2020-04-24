@@ -1,7 +1,4 @@
 <?php
-// показывать или нет выполненные задачи
-$show_complete_tasks = rand(0, 1);
-
 // Подключение функций
 require_once('functions.php');
 
@@ -14,7 +11,6 @@ require_once('init.php');
 // Функции с запросами на получение списка тасков
 require_once('select-tasks.php');
 
-
 if (!$db_connect) {
     $error = mysqli_connect_error();
     print("Ошибка Базы данных " . $error);
@@ -22,20 +18,32 @@ if (!$db_connect) {
     require_once('users.php');
 
     require_once('projects-list.php');
+}
 
-    // Данные для показа тасков по всем категориям или одной выбранной
-    if ($cat_project) {
-        $sql = show_cat_tasks($user_profile, $cat_project);
-    } else {
-        $sql = show_tasks($user_profile);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $new_task = $_POST;
+
+    if (isset($_FILES['file'])) {
+        /*$file_type = getExtension($_FILES['file']['name']);
+        $file_name = uniqid() . "." . $file_type;
+        $new_task['path'] = $file_name;*/
+        $file_name = $_FILES['file']['name'];
+        $new_task['path'] = $file_name;
+        move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/' . $file_name);
     }
-    $tasks_arr = mysqli_query($db_connect, $sql);
 
-    if ($tasks_arr) {
-        $tasks = mysqli_fetch_all($tasks_arr, MYSQLI_ASSOC);
+    $sql = 'INSERT INTO tasks (create_date, status, task_name, project_id, user_id, run_to, path) VALUES (NOW(), 0, ?, ?, 1, ?, ?)';
+
+    $stmt = db_get_prepare_stmt($db_connect, $sql, $new_task);
+    $res = mysqli_stmt_execute($stmt);
+    var_dump($new_task);
+    if ($res) {
+        $res_id = mysqli_insert_id($db_connect);
+
+        var_dump($res_id);
     } else {
         $error = mysqli_error($db_connect);
-        print("Ошибка базы данных " . $error);
+        print("Ошибка: " . $error);
     }
 }
 
@@ -45,18 +53,15 @@ $projects_list = include_template ('projects.php', [
     'projects' => $projects
 ]);
 
-$main_content = include_template ('main.php', [
+$main_content = include_template ('add-task.php', [
     'projects_list' => $projects_list,
-    'tasks' => $tasks,
     'all_tasks' => $all_tasks,
-    'projects' => $projects,
-    'show_complete_tasks' => $show_complete_tasks,
-    'is_cat_id' => $is_cat_id
+    'projects' => $projects
 ]);
 
 $layout_content = include_template('layout.php', [
     'content' => $main_content,
-    'title' => 'Дела в порядке',
+    'title' => 'Добавление задачи',
     'user_name' => $user_name
 ]);
 

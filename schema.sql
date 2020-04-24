@@ -25,5 +25,6 @@ CREATE TABLE tasks (
     task_name VARCHAR(128) NOT NULL,
     run_to DATE,
     user_id INT,
-    project_id INT
+    project_id INT,
+    path VARCHAR(128)
 );
