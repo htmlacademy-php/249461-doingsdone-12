@@ -38,11 +38,26 @@
 
     //Функция получения значений из POST запроса
     function getPostVal($name) {
-        return $_POST[$name];
+        return filter_input(INPUT_POST, $name);
     }
 
-    // Функция получения расширния загруженого файла
-    function getExtension( $filename ) {
-        return end( explode( '.', $filename ) );
+    // функции валидации
+    function validateCategory($id, $allowed_list) {
+        if (!in_array($id, $allowed_list)) {
+            return "Указана несуществующая категория";
+        }
+
+        return null;
+    }
+
+    function validateLength($value, $min, $max) {
+        if ($value) {
+            $len = strlen($value);
+            if ($len < $min or $len > $max) {
+                return "Значение должно быть от $min до $max символов";
+            }
+        }
+
+        return null;
     }
 ?>

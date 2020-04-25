@@ -43,11 +43,13 @@
                     </label>
                 </td>
 
-                <?php if ($val['path']) : ?>
+
                 <td class="task__file">
-                    <a class="download-link" href="uploads/<?= $val['path'] ?>"><?= $val['path'] ?></a>
+                    <?php if ($val['file_name']) : ?>
+                        <a class="download-link" href="<?= $val['file_path'] ?>" download=""><?= $val['file_name'] ?></a>
+                    <? endif; ?>
                 </td>
-                <? endif; ?>
+
 
                 <td class="task__date"><?= $val['run_to'] ?></td>
 
