@@ -22,9 +22,10 @@ CREATE TABLE tasks (
     id INT AUTO_INCREMENT PRIMARY KEY,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status TINYINT DEFAULT 0,
-    task_name VARCHAR(128) NOT NULL,
+    task_name VARCHAR(200) NOT NULL,
     run_to DATE,
     user_id INT,
     project_id INT,
-    path VARCHAR(128)
+    file_path VARCHAR(512),
+    file_name VARCHAR (128)
 );
