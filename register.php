@@ -23,6 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+    if (!empty($form['email'])) {
+        if (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'Проверьте правильность введенного email';
+        }
+    }
+
     if (empty($errors)) {
         //Проверка уникальности email
         $email = mysqli_real_escape_string($db_connect, $form['email']);
@@ -43,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         //Если все хорошо, перенаправляем на страницу с тасками
         if ($res && empty($errors)) {
-            header("Location: index.php");
+            header("Location: /auth.php");
         }
     }
 }

@@ -45,14 +45,18 @@ $projects_list = include_template ('projects.php', [
     'projects' => $projects
 ]);
 
-$main_content = include_template ('main.php', [
-    'projects_list' => $projects_list,
-    'tasks' => $tasks,
-    'all_tasks' => $all_tasks,
-    'projects' => $projects,
-    'show_complete_tasks' => $show_complete_tasks,
-    'is_cat_id' => $is_cat_id
-]);
+if (isset($_SESSION['user'])) {
+    $main_content = include_template('main.php', [
+        'projects_list' => $projects_list,
+        'tasks' => $tasks,
+        'all_tasks' => $all_tasks,
+        'projects' => $projects,
+        'show_complete_tasks' => $show_complete_tasks,
+        'is_cat_id' => $is_cat_id
+    ]);
+} else {
+    $main_content = include_template('guest.php', []);
+}
 
 $layout_content = include_template('layout.php', [
     'content' => $main_content,
