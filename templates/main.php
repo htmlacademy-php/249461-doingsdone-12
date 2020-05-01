@@ -3,8 +3,8 @@
 <main class="content__main">
     <h2 class="content__main-heading">Список задач</h2>
 
-    <form class="search-form" action="index.php" method="post" autocomplete="off">
-        <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
+    <form class="search-form" action="index.php" method="get" autocomplete="off">
+        <input class="search-form__input" type="text" name="search" value="<?= getGetVal('search'); ?>" placeholder="Поиск по задачам">
 
         <input class="search-form__submit" type="submit" name="" value="Искать">
     </form>
@@ -30,6 +30,8 @@
             <?php http_response_code(); ?>
             <?php $error = http_response_code(); ?>
             <?php print("Запрашиваемая категория не найдена. Error: " . $error); ?>
+            <?php elseif (isset($_GET['search']) && empty($tasks) ) : ?>
+            <?php print("По вашему запросу ничего не найдено"); ?>
             <?php else: ?>
         <?php foreach ($tasks as $key => $val) : ?>
             <?php if ($show_complete_tasks === 0 && $val['status'] == 1) {
