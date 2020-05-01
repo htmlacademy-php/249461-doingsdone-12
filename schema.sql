@@ -29,3 +29,5 @@ CREATE TABLE tasks (
     file_path VARCHAR(512),
     file_name VARCHAR (128)
 );
+
+CREATE FULLTEXT INDEX tasks_ft_search ON tasks(task_name);

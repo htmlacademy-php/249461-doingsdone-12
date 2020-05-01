@@ -40,6 +40,10 @@
     function getPostVal($name) {
         return filter_input(INPUT_POST, $name);
     }
+    //Функция получения значений из GET запроса
+    function getGETVal($name) {
+        return filter_input(INPUT_GET, $name);
+    }
 
     // функции валидации
     function validateCategory($id, $allowed_list) {

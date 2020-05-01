@@ -12,4 +12,11 @@
 
         return $sql;
     }
+
+/*    //Показ тасков по запросу поиска
+    function show_search_tasks ($user_id) {
+        $sql = 'SELECT tasks.id, status, task_name, run_to, project_id, file_name, file_path FROM tasks ' . 'WHERE tasks.user_id = "' . $user_id . '" AND MATCH(task_name) AGAINST(?)';
+
+        return $sql;
+    }*/
 ?>

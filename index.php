@@ -37,6 +37,18 @@ if (!$db_connect) {
         $error = mysqli_error($db_connect);
         print("Ошибка базы данных " . $error);
     }
+
+    $search = $_GET['search'] ?? '';
+
+    if ($search) {
+        $sql = 'SELECT tasks.id, status, task_name, run_to, project_id, file_name, file_path FROM tasks ' . 'WHERE tasks.user_id = "' . $user_profile . '" AND MATCH(task_name) AGAINST(?)';
+
+        $stmt = db_get_prepare_stmt($db_connect, $sql, [$search]);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
 }
 
 // Подключение темплейтов
