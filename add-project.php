@@ -40,9 +40,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $project = filter_input_array(INPUT_POST, ['project_name' => FILTER_DEFAULT]);
 
     //Проверка на пустые поля
-    foreach ($required as $field) {
-        if (empty($project[$field])) {
-            $errors[$field] = 'Поле не может быть пустым';
+    if (empty($project['project_name'])) {
+            $errors['project_name'] = 'Поле не может быть пустым';
+    }
+
+
+    if (empty($errors)) {
+        //Проверка уникальности названия проекта
+        $name = mysqli_real_escape_string($db_connect, $new_project['project_name']);
+        $sql = "SELECT id FROM projects WHERE project_name = '$name' AND user_id = '$user_profile'";
+        $res = mysqli_query($db_connect, $sql);
+
+        if (mysqli_num_rows($res) > 0) {
+            $errors['project_name'] = 'Название не должно повторятся';
         }
     }
 

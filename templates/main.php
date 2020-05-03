@@ -40,7 +40,7 @@
             <tr class="tasks__item task <?php if ($val['status'] == 1) echo "task--completed"; ?> <?php if (timeleft($val['run_to']) <= 24 && $val['status'] == 0) echo "task--important"; ?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
-                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
+                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?= $val['id'] ?>">
                         <span class="checkbox__text"><?= protection_xss($val['task_name']); ?></span>
                     </label>
                 </td>
