@@ -13,10 +13,17 @@
         return $sql;
     }
 
-/*    //Показ тасков по запросу поиска
-    function show_search_tasks ($user_id) {
-        $sql = 'SELECT tasks.id, status, task_name, run_to, project_id, file_name, file_path FROM tasks ' . 'WHERE tasks.user_id = "' . $user_id . '" AND MATCH(task_name) AGAINST(?)';
+    //Функция вывода тасков по заданой дате (Табы)
+    function show_tasks_by_date ($user_id, $tab) {
+
+        if ($tab == 'today') {
+            $sql = 'SELECT tasks.id, status, task_name, run_to, project_id, file_name, file_path FROM tasks ' . 'WHERE tasks.user_id = "' . $user_id . '" AND run_to = CURDATE()';
+        } elseif ($tab == 'tomorrow') {
+            $sql = 'SELECT tasks.id, status, task_name, run_to, project_id, file_name, file_path FROM tasks ' . 'WHERE tasks.user_id = "' . $user_id . '" AND run_to = ADDDATE(CURDATE(),INTERVAL 1 DAY)';
+        } elseif ($tab == 'expired') {
+            $sql = 'SELECT tasks.id, status, task_name, run_to, project_id, file_name, file_path FROM tasks ' . 'WHERE tasks.user_id = "' . $user_id . '" AND run_to < CURDATE()';
+        }
 
         return $sql;
-    }*/
+    }
 ?>

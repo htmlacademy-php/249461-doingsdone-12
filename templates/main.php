@@ -11,10 +11,13 @@
 
     <div class="tasks-controls">
         <nav class="tasks-switch">
-            <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-            <a href="/" class="tasks-switch__item">Повестка дня</a>
-            <a href="/" class="tasks-switch__item">Завтра</a>
-            <a href="/" class="tasks-switch__item">Просроченные</a>
+            <?php if (isset($_GET['date_list'])) {
+                $active_tab = $_GET['date_list'];
+            }?>
+            <a href="/" class="tasks-switch__item <?php if ($active_tab === '' || !isset($_GET['date_list'])) echo "tasks-switch__item--active"; ?>">Все задачи</a>
+            <a href="index.php?date_list=today" class="tasks-switch__item  <?php if ($active_tab === 'today') echo "tasks-switch__item--active"; ?>">Повестка дня</a>
+            <a href="index.php?date_list=tomorrow" class="tasks-switch__item  <?php if ($active_tab === 'tomorrow') echo "tasks-switch__item--active"; ?>">Завтра</a>
+            <a href="index.php?date_list=expired" class="tasks-switch__item  <?php if ($active_tab === 'expired') echo "tasks-switch__item--active"; ?>">Просроченные</a>
         </nav>
 
         <label class="checkbox">
