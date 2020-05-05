@@ -57,7 +57,7 @@ if (!$db_connect) {
     }
 }
 
-
+require_once ('completed-task.php');
 
 // Подключение темплейтов
 $projects_list = include_template ('projects.php', [
