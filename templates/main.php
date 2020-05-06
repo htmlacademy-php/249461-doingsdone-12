@@ -11,10 +11,13 @@
 
     <div class="tasks-controls">
         <nav class="tasks-switch">
-            <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-            <a href="/" class="tasks-switch__item">Повестка дня</a>
-            <a href="/" class="tasks-switch__item">Завтра</a>
-            <a href="/" class="tasks-switch__item">Просроченные</a>
+            <?php if (isset($_GET['date_list'])) {
+                $active_tab = $_GET['date_list'];
+            }?>
+            <a href="/" class="tasks-switch__item <?php if ($active_tab === '' || !isset($_GET['date_list'])) echo "tasks-switch__item--active"; ?>">Все задачи</a>
+            <a href="index.php?date_list=today" class="tasks-switch__item  <?php if ($active_tab === 'today') echo "tasks-switch__item--active"; ?>">Повестка дня</a>
+            <a href="index.php?date_list=tomorrow" class="tasks-switch__item  <?php if ($active_tab === 'tomorrow') echo "tasks-switch__item--active"; ?>">Завтра</a>
+            <a href="index.php?date_list=expired" class="tasks-switch__item  <?php if ($active_tab === 'expired') echo "tasks-switch__item--active"; ?>">Просроченные</a>
         </nav>
 
         <label class="checkbox">
@@ -40,7 +43,7 @@
             <tr class="tasks__item task <?php if ($val['status'] == 1) echo "task--completed"; ?> <?php if (timeleft($val['run_to']) <= 24 && $val['status'] == 0) echo "task--important"; ?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
-                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
+                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?= $val['id'] ?>" <?php if ($val['status'] == 1) echo "checked"; ?>>
                         <span class="checkbox__text"><?= protection_xss($val['task_name']); ?></span>
                     </label>
                 </td>

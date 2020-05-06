@@ -49,7 +49,15 @@ if (!$db_connect) {
 
         $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    if (isset($_GET['date_list'])) {
+        $active_tab = $_GET['date_list'];
+        $sql = show_tasks_by_date($user_profile, $active_tab);
+        $tasks = mysqli_query($db_connect, $sql);
+    }
 }
+
+require_once ('completed-task.php');
 
 // Подключение темплейтов
 $projects_list = include_template ('projects.php', [
