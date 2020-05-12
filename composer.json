@@ -1,0 +1,12 @@
+{
+    "name": "skrav/localhost",
+    "authors": [
+        {
+            "name": "kravtsov-s-o",
+            "email": "s.kravtsov@hotmail.com"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "^6.2"
+    }
+}
