@@ -21,14 +21,13 @@
         </nav>
 
         <label class="checkbox">
-            <!--добавить сюда атрибут "checked", если переменная $show_complete_tasks равна единице-->
             <input class="checkbox__input visually-hidden show_completed" <?php if($show_complete_tasks === 1) echo "CHECKED"; ?> type="checkbox">
             <span class="checkbox__text">Показывать выполненные</span>
         </label>
     </div>
 
     <table class="tasks">
-        <?php if (isset($_GET['cat_id']) && $is_cat_id == false) : ?>
+        <?php if (isset($_GET['cat_id']) && $is_cat_id === false) : ?>
             <?php http_response_code(404); ?>
             <?php http_response_code(); ?>
             <?php $error = http_response_code(); ?>
@@ -62,6 +61,5 @@
 
         <?php endforeach; ?>
         <?php endif; ?>
-        <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
     </table>
 </main>

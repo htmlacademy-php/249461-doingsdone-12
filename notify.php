@@ -6,7 +6,6 @@
     require_once ('init.php');
     require_once ('functions.php');
     require_once ('helpers.php');
-
     require_once ('select-tasks.php');
 
     $transport = new Swift_SmtpTransport("smtp.mailtrap.io", 2525);
@@ -15,7 +14,6 @@
 
     $mailer = new Swift_Mailer($transport);
 
-    //Получение списка всех пользователей
     $sql = 'SELECT id, email, user_name FROM users';
     $res = mysqli_query($db_connect, $sql);
     $all_users = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -41,13 +39,6 @@
             $message->setBody($msg_content, 'text/html');
 
             $result = $mailer->send($message);
-
-/*            if ($result) {
-                print("Рассылка успешно отправлена");
-            }
-            else {
-                print("Не удалось отправить рассылку");
-            }*/
         }
     }
 ?>

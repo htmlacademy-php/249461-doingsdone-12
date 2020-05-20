@@ -15,7 +15,6 @@
             <?php if (isset($errors['email'])) : ?>
                 <p class="form__message"><?= $errors['email'] ?></p>
             <?php endif; ?>
-            <!--<p class="form__message">E-mail введён некорректно</p>-->
         </div>
 
         <div class="form__row">
@@ -37,7 +36,6 @@
         </div>
 
         <div class="form__row form__row--controls">
-            <!--<p class="error-message">Пожалуйста, исправьте ошибки в форме</p>-->
             <?php if (isset($errors)): ?>
                 <p class="error-message">Пожалуйста, исправьте ошибки в форме</p>
             <?php endif; ?>

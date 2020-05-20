@@ -1,21 +1,9 @@
 <?php
-
-// Подключение функций
 require_once('functions.php');
-
-// Файл с функцией подключения темплейтов
 require_once('helpers.php');
-
-// Подключение к БД
 require_once('init.php');
-
-// Функции с запросами на получение списка тасков
 require_once('select-tasks.php');
-
-// Данные о пользователе
 require_once('users.php');
-
-// Данные по проетам для сайдбара
 require_once('projects-list.php');
 
 $projects_list = include_template ('projects.php', [
@@ -25,9 +13,7 @@ $projects_list = include_template ('projects.php', [
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $new_project  = $_POST;
-    //Обязательные поля
     $required = ['project_name'];
-    //Ошибки валидации
     $errors = [];
 
     $rules = [
@@ -36,17 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     ];
 
-    // Получаем данные из формы
     $project = filter_input_array(INPUT_POST, ['project_name' => FILTER_DEFAULT]);
 
-    //Проверка на пустые поля
     if (empty($project['project_name'])) {
             $errors['project_name'] = 'Поле не может быть пустым';
     }
 
 
     if (empty($errors)) {
-        //Проверка уникальности названия проекта
         $name = mysqli_real_escape_string($db_connect, $new_project['project_name']);
         $sql = "SELECT id FROM projects WHERE project_name = '$name' AND user_id = '$user_profile'";
         $res = mysqli_query($db_connect, $sql);
@@ -88,14 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ]);
 }
 
-// Подключение темплейтов
 $layout_content = include_template('layout.php', [
     'content' => $main_content,
     'title' => 'Добавить новый проект',
     'user_name' => $user_name
 ]);
 
-// Вывод темплейтов
 print($layout_content);
-
 ?>
