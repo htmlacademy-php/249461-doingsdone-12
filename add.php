@@ -1,32 +1,12 @@
 <?php
-// Подключение функций
 require_once('functions.php');
-
-// Файл с функцией подключения темплейтов
 require_once('helpers.php');
-
-// Подключение к БД
 require_once('init.php');
-
-// Функции с запросами на получение списка тасков
 require_once('select-tasks.php');
-
-// Данные о пользователе
 require_once('users.php');
-
-// Данные по проетам для сайдбара
 require_once('projects-list.php');
 
 $cat_id = array_column($projects, 'id');
-
-/*if (!$db_connect) {
-    $error = mysqli_connect_error();
-    print("Ошибка Базы данных " . $error);
-} else {
-
-
-    $cat_id = array_column($projects, 'id');
-}*/
 
 $projects_list = include_template ('projects.php', [
     'all_tasks' => $all_tasks,
@@ -35,12 +15,9 @@ $projects_list = include_template ('projects.php', [
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $new_task = $_POST;
-    //Обязательные поля
     $required = ['task_name', 'project_id'];
-    //Ошибки валидации
     $errors = [];
 
-    //Функции-помощники для валидации и поля, которые они должны обработать
     $rules = [
         'task_name' => function($value) {
             return validateLength($value, 3, 200);
@@ -63,12 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     ];
 
-    //Получение данных из формы
     $task = filter_input_array(INPUT_POST, ['task_name' => FILTER_DEFAULT, 'project_id' => FILTER_DEFAULT, 'run_to' => FILTER_DEFAULT], true);
     if ($task['run_to'] == '') {
         $task['run_to'] = NULL;
     }
-    //Применяем фун-ии валидации к полям формы
     foreach ($task as $key => $value) {
         if (isset($rules[$key])) {
             $rule = $rules[$key];
@@ -83,16 +58,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $new_task['user_id'] = $user_profile;
 
     if (!empty($_FILES['file'])) {
-        //Имя файла
         $file_name = $_FILES['file']['name'];
         $new_task['file_name'] = $file_name;
 
         if ($file_name) {
-            //Имя дирктории и путь создания для сохранения загруженого файла
+            $uploads = "uploads";
+            if (!is_dir($uploads)) {
+                mkdir($uploads, 0777);
+            }
+
             $dir_name = uniqid();
             $new_dir = mkdir('uploads/' . $dir_name, 0777);
 
-            // Путь к файлу,
             $file_path = 'uploads/' . $dir_name . '/';
             $new_task['file_path'] = $file_path . $file_name;
             move_uploaded_file($_FILES['file']['tmp_name'], $file_path . $file_name);
@@ -108,7 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $errors = array_filter($errors);
 
-    //Проверяем длинну массива с ошибками
     if (count($errors)) {
         $main_content = include_template('add-task.php', [
             'task' => $task,
@@ -139,13 +115,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ]);
 }
 
-// Подключение темплейтов
 $layout_content = include_template('layout.php', [
     'content' => $main_content,
     'title' => 'Добавление задачи',
     'user_name' => $user_name
 ]);
 
-// Вывод темплейтов
 print($layout_content);
 ?>

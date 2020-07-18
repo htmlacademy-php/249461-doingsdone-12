@@ -1,6 +1,6 @@
 <?php
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
     if (isset($_GET['task_id'])) {
         $input_task = $_GET['task_id'];
         if ($input_task > 0) {
@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $result = mysqli_query($db_connect, $sql);
             $task = mysqli_fetch_all($result, MYSQLI_ASSOC);
             $task_status = array_column($task, 'status');
-            //var_dump($task_status[0]);
             if ($task_status[0] == 0) {
                 $task_complete = 1;
             } else {

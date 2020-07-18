@@ -2,7 +2,6 @@
 
 <main class="content__main">
     <h2 class="content__main-heading">Добавление задачи</h2>
-    <!--index.html-->
     <form class="form"  action="add.php" method="post" enctype="multipart/form-data" autocomplete="off">
         <div class="form__row">
             <label class="form__label" for="name">Название <sup>*</sup></label>
@@ -22,7 +21,7 @@
             <select class="form__input form__input--select <?= $classname;?>" name="project_id" id="project">
                 <option value="">Выбери проект</option>
                 <?php foreach ($projects as $val) : ?>
-                    <option value="<?=$val['id']; ?>" <?php if ($val['id'] == getPostVal('project_id')) : ?>selected<?php endif; ?>><?=protection_xss($val['project_name']);?></option>
+                    <option value="<?=$val['id']; ?>" <?php if ($val['id'] === getPostVal('project_id')) : ?>selected<?php endif; ?>><?=protection_xss($val['project_name']);?></option>
                 <?php endforeach;?>
             </select>
         </div>

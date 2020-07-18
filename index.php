@@ -1,17 +1,9 @@
 <?php
-// показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
 
-// Подключение функций
 require_once('functions.php');
-
-// Файл с функцией подключения темплейтов
 require_once('helpers.php');
-
-// Подключение к БД
 require_once('init.php');
-
-// Функции с запросами на получение списка тасков
 require_once('select-tasks.php');
 
 
@@ -23,7 +15,6 @@ if (!$db_connect) {
 
     require_once('projects-list.php');
 
-    // Данные для показа тасков по всем категориям или одной выбранной
     if ($cat_project) {
         $sql = show_cat_tasks($user_profile, $cat_project);
     } else {
@@ -59,7 +50,6 @@ if (!$db_connect) {
 
 require_once ('completed-task.php');
 
-// Подключение темплейтов
 $projects_list = include_template ('projects.php', [
     'all_tasks' => $all_tasks,
     'projects' => $projects
@@ -84,6 +74,5 @@ $layout_content = include_template('layout.php', [
     'user_name' => $user_name
 ]);
 
-// Вывод темплейтов
 print($layout_content);
 ?>
