@@ -9,7 +9,7 @@
             <?php if (isset($errors['task_name'])) : ?>
                 <p class="form__message"><?= $errors['task_name'] ?></p>
             <?php endif; ?>
-            <input class="form__input <?= $classname;?>" type="text" name="task_name" id="name" value="<?= getPostVal('task_name'); ?>" placeholder="Введите название">
+            <input class="form__input <?= $classname;?>" type="text" name="task_name" id="name" value="<?= protection_xss(getPostVal('task_name')); ?>" placeholder="Введите название">
         </div>
 
         <div class="form__row">
@@ -32,7 +32,7 @@
             <?php if (isset($errors['run_to'])) : ?>
                 <p class="form__message"><?= $errors['run_to'] ?></p>
             <?php endif; ?>
-            <input class="form__input form__input--date <?= $classname;?>" type="text" name="run_to" id="date" value="<?= getPostVal('run_to'); ?>" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
+            <input class="form__input form__input--date <?= $classname;?>" type="text" name="run_to" id="date" value="<?= protection_xss(getPostVal('run_to')); ?>" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
         </div>
 
         <div class="form__row">

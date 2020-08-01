@@ -10,7 +10,7 @@
             <?php if (isset($errors['project_name'])) : ?>
                 <p class="form__message"><?= $errors['project_name'] ?></p>
             <?php endif; ?>
-            <input class="form__input <?= $classname;?>" type="text" name="project_name" id="project_name" value="<?= getPostVal('project_name'); ?>" placeholder="Введите название проекта">
+            <input class="form__input <?= $classname;?>" type="text" name="project_name" id="project_name" value="<?= protection_xss(getPostVal('project_name')); ?>" placeholder="Введите название проекта">
         </div>
 
         <div class="form__row form__row--controls">

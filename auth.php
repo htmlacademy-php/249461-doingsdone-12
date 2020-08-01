@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+
+
     $email = mysqli_real_escape_string($db_connect, $form['email']);
     $sql = "SELECT * FROM users WHERE email = '$email'";
     $res = mysqli_query($db_connect, $sql);
@@ -27,7 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errors['password'] = 'Введен неверный пароль';
         }
     } else {
-        $errors['email'] = 'Такой пользователь не найден';
+        if (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'Проверьте правильность введенного email';
+        } else {
+            $errors['email'] = 'Такой пользователь не найден';
+        }
     }
 
     if (count($errors)) {

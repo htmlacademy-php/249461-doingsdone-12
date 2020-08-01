@@ -11,7 +11,7 @@
         <div class="form__row">
             <label class="form__label" for="email">E-mail <sup>*</sup></label>
             <?php $classname = isset($errors['email']) ? "form__input--error" : ""; ?>
-            <input class="form__input <?= $classname;?>" type="text" name="email" id="email" value="<?= getPostVal('email'); ?>" placeholder="Введите e-mail">
+            <input class="form__input <?= $classname;?>" type="text" name="email" id="email" value="<?= protection_xss(getPostVal('email')); ?>" placeholder="Введите e-mail">
             <?php if (isset($errors['email'])) : ?>
                 <p class="form__message"><?= $errors['email'] ?></p>
             <?php endif; ?>
@@ -29,7 +29,7 @@
         <div class="form__row">
             <label class="form__label" for="name">Имя <sup>*</sup></label>
             <?php $classname = isset($errors['user_name']) ? "form__input--error" : ""; ?>
-            <input class="form__input <?= $classname;?>" type="text" name="user_name" id="name" value="<?= getPostVal('user_name'); ?>" placeholder="Введите имя">
+            <input class="form__input <?= $classname;?>" type="text" name="user_name" id="name" value="<?= protection_xss(getPostVal('user_name')); ?>" placeholder="Введите имя">
             <?php if (isset($errors['user_name'])) : ?>
                 <p class="form__message"><?= $errors['user_name'] ?></p>
             <?php endif; ?>

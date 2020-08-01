@@ -35,7 +35,7 @@
 
                     <div class="main-header__side-item user-menu">
                         <div class="user-menu__data">
-                            <p><?=$user_name;?><!--Константин--></p>
+                            <p><?=protection_xss($user_name);?><!--Константин--></p>
 
                             <a href="logout.php">Выйти</a>
                         </div>
