@@ -24,4 +24,18 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     }
 }
 
+$show_complete_tasks = 0;
+
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
+    if (isset($_GET['show_completed'])) {
+        $show_completed = $_GET['show_completed'];
+        if ($show_completed > 0) {
+            $show_complete_tasks = 1;
+        } else {
+            $show_completed = 0;
+            $show_complete_tasks = 0;
+        }
+    }
+}
+
 ?>

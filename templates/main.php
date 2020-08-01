@@ -36,13 +36,13 @@
             <?php print("По вашему запросу ничего не найдено"); ?>
             <?php else: ?>
         <?php foreach ($tasks as $key => $val) : ?>
-            <?php if ($show_complete_tasks === 0 && $val['status'] == 1) {
+            <?php if ($show_complete_tasks === 0 && $val['status'] === '1') {
                 continue;
             } ?>
-            <tr class="tasks__item task <?php if ($val['status'] == 1) echo "task--completed"; ?> <?php if (timeleft($val['run_to']) <= 24 && $val['status'] == 0) echo "task--important"; ?> ">
+            <tr class="tasks__item task <?php if ($val['status'] === '1') echo "task--completed"; ?> <?php if (timeleft($val['run_to']) <= 24 && $val['status'] === '0') echo "task--important"; ?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
-                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?= $val['id'] ?>" <?php if ($val['status'] == 1) echo "checked"; ?>>
+                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?= $val['id'] ?>" <?php if ($val['status'] === '1') echo "checked"; ?>>
                         <span class="checkbox__text"><?= protection_xss($val['task_name']); ?></span>
                     </label>
                 </td>
@@ -50,12 +50,12 @@
 
                 <td class="task__file">
                     <?php if ($val['file_name']) : ?>
-                        <a class="download-link" href="<?= $val['file_path'] ?>" download=""><?= $val['file_name'] ?></a>
+                        <a class="download-link" href="<?= $val['file_path'] ?>" download=""><?= protection_xss($val['file_name']); ?></a>
                     <? endif; ?>
                 </td>
 
 
-                <td class="task__date"><?= $val['run_to'] ?></td>
+                <td class="task__date"><?= protection_xss($val['run_to']); ?></td>
 
             </tr>
 

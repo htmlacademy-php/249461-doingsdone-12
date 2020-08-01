@@ -1,5 +1,4 @@
 <?php
-$show_complete_tasks = rand(0, 1);
 
 require_once('functions.php');
 require_once('helpers.php');

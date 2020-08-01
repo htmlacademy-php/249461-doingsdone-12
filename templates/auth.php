@@ -12,7 +12,7 @@
             <label class="form__label" for="email">E-mail <sup>*</sup></label>
             <?php $classname = isset($errors['email']) ? "form__input--error" : "";
             $value = isset($form['email']) ? $form['email'] : ""; ?>
-            <input class="form__input <?=$classname;?>" type="text" name="email" id="email" value="<?=$value;?>" placeholder="Введите e-mail">
+            <input class="form__input <?=$classname;?>" type="text" name="email" id="email" value="<?=protection_xss($value);?>" placeholder="Введите e-mail">
             <?php if ($classname): ?>
                 <p class="form__message"><?=$errors['email'];?></p>
             <?php endif; ?>
